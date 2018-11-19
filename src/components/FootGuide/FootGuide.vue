@@ -1,7 +1,8 @@
 <template>
-  <footer class="footer">
-    <span class="guide_item on" :class="{on:$route.path==='/msite'}" @click="goto('/msite')"><span><i
-      class="iconfont icon-waimai"></i></span>
+  <footer class="footer_guide border-1px">
+    <span class="guide_item" :class="{on:$route.path==='/msite'}" @click="goto('/msite')">
+      <span><i class="iconfont icon-waimai"></i>
+      </span>
       <span class="itemText">外卖</span>
     </span>
     <span class="guide_item" :class="{on:$route.path==='/search'}" @click="goto('/search')"><span><i
@@ -14,8 +15,9 @@
     </span>
     <span class="guide_item" :class="{on:$route.path==='/profile'}" @click="goto('/profile')"><span><i
       class="iconfont icon-geren"></i></span>
-      <span class="itemText">我的</span>
+      <i class="iconfont icon-geren"></i>
     </span>
+    <span>我的</span>
   </footer>
 </template>
 
@@ -33,28 +35,31 @@
 
 <style lang="stylus" rel="stylesheet/stylus">
   @import "../../common/stylus/mixins.styl"
-  .footer
-    top-border-1px(#ddd)
+  .footer_guide
+    top-border-1px(#e4e4e4)
     position fixed
+    z-index 100
     bottom 0
     left 0
+    right 0
     width 100%
     height 50px
     display flex
-    .footerItem
+    .guide_item
       flex 1
       display flex
-      justify-content center
+      text-align center
       flex-direction column
       align-items center
-      .iconfont
-        font-size 22px
-      .itemText
-        font-size 13px
-        margin 3px 0
-      &.active
-        color $maincolor
-
-
+      margin 5px
+      color: #999999
+      &.on
+        color #02a774
+      span
+        font-size 12px
+        margin-top 2px
+        margin-bottom 2px
+        .iconfont
+          font-size 22px
 </style>
 

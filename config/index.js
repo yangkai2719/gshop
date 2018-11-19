@@ -10,8 +10,16 @@ module.exports = {
     // Paths
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
-    proxyTable: {},
-
+    proxyTable:{
+        '/api':{
+          target:'http://localhost:5000',
+          changeOrigin:true,
+          XPathRewrite:{
+            '^/api':''
+          }
+        }
+      },
+  
     // Various Dev Server settings
     host: 'localhost', // can be overwritten by process.env.HOST
     port: 8080, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
@@ -24,7 +32,10 @@ module.exports = {
     /**
      * Source Maps
      */
-
+useEslint:true,
+    showEslintErrorsInOverlay:false,
+    
+    
     // https://webpack.js.org/configuration/devtool/#development
     devtool: 'cheap-module-eval-source-map',
 
