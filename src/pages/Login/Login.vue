@@ -35,13 +35,9 @@
               </section>
               <section class="login_verification">
                 <input :type="isShowPwd?'text' :'password'" maxlength="8" placeholder="密码">
-
                 <div class="switch_button" @click="isShowPwd=!isShowPwd" :class="isShowPwd ? 'on':'off'">
                   <div class="switch_circle" :class="{right:isShowPwd}"></div>
-                  <span class="switch_text">{{isShowPwd?'abc':''}}</span>
-                </div>
-                <div>
-
+                  <span class="switch_text">{{isShowPwd ? 'abc' : ''}}</span>
                 </div>
                 <section class="login_message">
                   <input type="text" maxlength="11" placeholder="验证码">
@@ -64,37 +60,37 @@
 <script>
   export default {
     data(){
-      return{
-        loginWay:false,
-        phone:'',
-        computeTime:0,
-        isShowPwd:false,
+      return {
+        loginWay: false,
+        phone: '',
+        computeTime: 0,
+        isShowPwd: false,
       }
     },
-    computed:{
+    computed: {
       isRightPhone(){
         return /^1\d{10}$/.test(this.phone)
       }
     },
-   methods:{
+    methods: {
       sendCode(){
-        this.computeTime=30
-        const interalId=setInterval(()=>{
-          console.log('----',this.computeTime)
+        this.computeTime = 30
+        const interalId = setInterval(() => {
+          console.log('----', this.computeTime)
           this.computeTime--
-          if (this.computeTime<=0){
-            this.computeTime=0
+          if (this.computeTime <= 0) {
+            this.computeTime = 0
 
-          clearInterval(interalId)
+            clearInterval(interalId)
           }
-          },1000)
+        }, 1000)
       }
-   }
+    }
   }
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus" scoped>
-@import "../../common/stylus/mixins.styl"
+  @import "../../common/stylus/mixins.styl"
   .loginContainer
     width 100%
     height 100%
@@ -112,7 +108,7 @@
         .login_header_title
           padding-top 40px
           text-align center
-          >a
+          > a
             color #333
             font-size 14px
             padding-bottom 4px
@@ -123,8 +119,8 @@
               font-weight 700
               border-bottom 2px solid #02a774
       .login_content
-        >form
-          >div
+        > form
+          > div
           display none
           &.on
             display blockquote
@@ -144,83 +140,92 @@
             margin-top 16px
             height 48px
             font-size 14px
-            background transparent
-            &.right_phone_number
-              color:black
-        .login_verification
-          position relative
-          margin-top 16px
-          height 48px
-          font-size 14px
-          background #fff
-          .switch_button
-            font-size 12px
-            border 1px solid #ddd
-            border-radius 8px
-            transition background-color .3s,border-color  .3s
-            padding 0 6px
-            width 30px
-            height 16px
-            line-height 16px
-            color #fff
-            position absolute
-            top 50%
-            right 10px
-            transform translateY(-50%)
-            &.off
-              background #fff
-              .switch_text
-                float right
-                color #ddd
-            &.on
-              background #02a774
-            >.switch_circle
+            background #fff
+            .get_verification
               position absolute
-              top -1px
-              left -1px
-              width 16px
-              height 16px
+              top 50%
+              right 10px
+              transparent translateY(-50%)
+              border 0
+              color #ccc
+              font-size 14px
+              background transparent
+              &.right_phone_number
+                color: black
+          .login_verification
+            position relative
+            margin-top 16px
+            height 48px
+            font-size 14px
+            background #fff
+            .switch_button
+              font-size 12px
               border 1px solid #ddd
-              border-radius 50%
-              background #fff
-              box-shadow 0 2px 4px 0 rgba(0,0,0,.1)
-              transition transform .3s
-              &.right
-                transform translateX(27px)
-        .login_hint
-           margin-top 12px
-           color #999
-           font-size 14px
-           line-heigh 20px
-           >a
-             color #02a774
-      .login_submit
+              border-radius 8px
+              transition background-color .3s, border-color .3s
+              padding 0 6px
+              width 30px
+              height 16px
+              line-height 16px
+              color #fff
+              position absolute
+              top 50%
+              right 10px
+              transform translateY(-50%)
+              &.off
+                background #fff
+                .switch_text
+                  float right
+                  color #ddd
+              &.on
+                background #02a774
+              > .switch_circle
+                position absolute
+                top -1px
+                left -1px
+                width 16px
+                height 16px
+                border 1px solid #ddd
+                border-radius 50%
+                background #fff
+                box-shadow 0 2px 4px 0 rgba(0, 0, 0, .1)
+                transition transform .3s
+                &.right
+                  transform translateX(27px)
+          .login_hint
+            margin-top 12px
+            color #999
+            font-size 14px
+            line-heigh 20px
+            > a
+              color #02a774
+        .login_submit
+          display block
+          width 100%
+          height 42px
+          margin-top 30px
+          border-radius 4px
+          background #4cd96f
+          color #fff
+          text-align center
+          font-size 16px
+          line-height 42px
+          border 0
+      .about_us
         display block
-        width 100%
-        height 42px
-        margin-top 30px
-        border-radius 4px
-        background #4cd96f
-        color #fff
+        font-size 12px
+        margin-top 20px
         text-align center
-        font-size 16px
-        line-height 42px
-        border 0
-    .about_us
-      display block
-      font-size 12px
-      margin-top 20px
-      text-align center
-      color #999
-  .go_back
-    position absolute
-    top 5px
-    left 5px
-    width 30px
-    height 30px
-    >.iconfont
-      font-size 20px
-      color #999
+        color #999
+    .go_back
+      position absolute
+      top 5px
+      left 5px
+      width 30px
+      height 30px
+      > .iconfont
+        font-size 20px
+        color #999
 </style>
 
 
