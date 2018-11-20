@@ -11,7 +11,7 @@
 
     mounted(){
       this.$store.dispatch('getAddress')
-
+      this.$store.dispatch('getUserInfo')
     },
 
     components: {
@@ -19,6 +19,7 @@
     }
   }
 </script>
+
 <style lang="stylus" rel="stylesheet/stylus">
 
 

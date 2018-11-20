@@ -1,7 +1,8 @@
 <template>
   <div class="shop_container">
     <ul class="shop_list" v-if="shops.length">
-      <li class="shop_li border-1px" v-for="(shop,index) in shop" :key="index">
+      <li class="shop_li border-1px" v-for="(shop,index) in shops"
+          :key="index" @click="$router.push('/shop')">
         <a>
           <div class="shop_left">
             <img class="shop_img" :src="imageBaseUrl+shop.image_path">
@@ -15,13 +16,7 @@
             </section>
             <section class="shop_rating_order">
               <section class="shop_rating_order_left">
-                <div class="star star-24">
-                  <span class="star-item on"></span>
-                  <span class="star-item on"></span>
-                  <span class="star-item on"></span>
-                  <span class="star-item half"></span>
-                  <span class="star-item off"></span>
-                </div>
+                <Star :size="24" :score="shop.rating"/>
                 <div class="rating_section">
                   {{shop.rating}}
                 </div>
@@ -43,7 +38,6 @@
           </div>
         </a>
       </li>
-
     </ul>
     <ul v-else>
       <li>
@@ -66,18 +60,24 @@
 </template>
 
 <script>
-import{mapState} from 'vuex'
+  import{mapState} from 'vuex'
+  import Star from '../../components/Star/Star.vue'
+
   export default {
-  data(){
-    return{
-      imageBaseUrl:'https://fuss10.elemecdn.com'
+    data(){
+      return {
+        imageBaseUrl: 'https://fuss10.elemecdn.com'
+      }
+    },
+    computed: {
+      ...mapState(['shops'])
+    },
+    components: {
+      Star
     }
-  },
-  computed:{
-    ...mapState(['shops'])
-  }
   }
 </script>
+
 
 <style lang="stylus" rel="stylesheet/stylus" scoped>
   @import "../../common/stylus/mixins.styl"
@@ -138,102 +138,51 @@ import{mapState} from 'vuex'
                   border-radius 2px
             .shop_rating_order
               clearFix()
-                width 100%
-                margin-top 18px
-                margin-bottom 8px
-                .shop_rating_order_left
+              width 100%
+              margin-top 18px
+              margin-bottom 8px
+              .shop_rating_order_left
+                float left
+                color #ff9a0d
+                .rating_section
                   float left
-                  color #ff9a0d
-                  .star
-                    float left
-                    font-size 0
-                    .star-item
-                      display inline-block
-                      backgroun-repeat no-repeat
-                    &.start-48
-                      .star-item
-                        width 20px
-                        height 20px
-                        margin-right 22px
-                        background-size 20px 20px
-                        &:last-child
-                          margin-right 0
-                        &.on
-                          bg-image('./images/starts/star48_on')
-                        &.half
-                          bg-image('./images/starts/star48_half')
-                        &.off
-                          bg-image('./images/starts/star48_off')
-                   &.start-36
-                     .star-item
-                       width 15px
-                       height 15px
-                       margin-right 6px
-                       background-size 15px 15px
-                       &:last-child
-                         margin-right 0
-
-                       &.on
-                          bg-image('./images/starts/star36_on')
-                       &.half
-                          bg-image('./images/starts/star36_half')
-                       &.off
-                          bg-image('./images/starts/star36_off')
-                   &.start-24
-                      .star-item
-                        width 10px
-                        height 10px
-                        margin-right 3px
-                        background-size 10px 10px
-                        &:last-child
-                          margin-right 0
-                        &.on
-                          bg-image('./images/starts/star24_on')
-                        &.half
-                          bg-image('./images/starts/star24_half')
-                        &.off
-                          bg-image('./images/starts/star24_off')
-                  .rating_section
-                    float left
-                    font-size 10px
-                    color #ff6000
-                    margin-left 4px
-                  .order_section
-                    float left
-                    font-size 10px
-                    color #666
-                    transform scale(.8)
-                .shop_rating_order_right
-                  float right
-                  font-size 0
-                  .delivery_style
-                    transform-origin 35px 0
-                    transform scale(.7)
-                    display inline-block
-                    font-size 12px
-                    padding 1px
-                    border-radius 2px
-                  .delivery_left
-                    color #fff
-                    margin-right -10px
-                    background-color #02a774
-                    border 1px solid #02a774
-                  .delivery_right
-                    color #02a774
-                    border 1px solid #02a774
-              .shop_distance
-                clearFix()
-                width 100%
-                font-size 12px
-                .shop_delivery_msg
-                  flat left
-                  transform-origin 0
-                  transform scale(.9)
+                  font-size 10px
+                  color #ff6000
+                  margin-left 4px
+                .order_section
+                  float left
+                  font-size 10px
                   color #666
-                .segmentation
-                  color #ccc
-
-
+                  transform scale(.8)
+              .shop_rating_order_right
+                float right
+                font-size 0
+                .delivery_style
+                  transform-origin 35px 0
+                  transform scale(.7)
+                  display inline-block
+                  font-size 12px
+                  padding 1px
+                  border-radius 2px
+                .delivery_left
+                  color #fff
+                  margin-right -10px
+                  background-color #02a774
+                  border 1px solid #02a774
+                .delivery_right
+                  color #02a774
+                  border 1px solid #02a774
+            .shop_distance
+              clearFix()
+              width 100%
+              font-size 12px
+              .shop_delivery_msg
+                flat left
+                transform-origin 0
+                transform scale(.9)
+                color #666
+              .segmentation
+                color #ccc
 </style>
 
 

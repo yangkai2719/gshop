@@ -31,22 +31,23 @@
           <div :class="{on: !loginWay}">
             <section>
               <section class="login_message">
-                <input type="tel" maxlength="11" placeholder="手机/邮箱/用户名">
+                <input type="tel" maxlength="11" placeholder="手机/邮箱/用户名" v-model="name">
               </section>
               <section class="login_verification">
-                <input :type="isShowPwd?'text' :'password'" maxlength="8" placeholder="密码">
+                <input :type="isShowPwd ?'text' :'password'" maxlength="8" placeholder="密码" v-model="pwd">
                 <div class="switch_button" @click="isShowPwd=!isShowPwd" :class="isShowPwd ? 'on':'off'">
                   <div class="switch_circle" :class="{right:isShowPwd}"></div>
                   <span class="switch_text">{{isShowPwd ? 'abc' : ''}}</span>
                 </div>
+              </section>
                 <section class="login_message">
-                  <input type="text" maxlength="11" placeholder="验证码">
-                  <img class="get_verification" src="./images/captcha.svg" alt="captcha">
-                </section>
+                  <input type="text" maxlength="11" placeholder="验证码" v-model="captcha">
+                  <img ref="captcha" class="get_verification" src="http://localhost:5000/captcha" alt="captcha" @click="updateCaptcha">
+
               </section>
             </section>
           </div>
-          <button class="login_submit">登录</button>
+          <button class="login_submit" @click.prevent="login">登录</button>
         </form>
         <a href="javascript:;" class="about_us">关于我们</a>
       </div>
@@ -58,11 +59,17 @@
 </template>
 
 <script>
+  import {reqSendCode,reqPwdLogin,reqSmsLogin} from '../../api'
+  import {Toast,MessageBox} from 'mint-ui'
   export default {
     data(){
       return {
         loginWay: false,
         phone: '',
+        code:'',
+        name:'',
+        pwd:'',
+        captcha:'',
         computeTime: 0,
         isShowPwd: false,
       }

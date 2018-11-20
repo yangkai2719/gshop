@@ -1,12 +1,22 @@
 import{
   reqAddress,
   reqShops,
-  reqFoodCategorys
+  reqFoodCategorys,
+  reqUserInfo,
+  reqLogout,
+  reqShopGoods,
+  reqShopRatings,
+  reqShopInfo
 } from '../api'
 import{
   RECEIVE_SHOPS,
   RECEIVE_CATEGORYS,
-  RECEIVE_ADDRESS
+  RECEIVE_ADDRESS,
+  RECEIVE_USER,
+  RESET_USER,
+  RECEIVE_INFO,
+  RECEIVE_RATINGS,
+  RECEIVE_GOODS,
 }   from './mutation-types'
 
 
@@ -31,7 +41,7 @@ async  getAddress({commit, state}){
     }
     //根据结果提交mutation
   },
-  async getShop({commit, state}){
+  async getShops({commit, state}){
     const {longitude, latitude} = state
     const result = await reqShops({longitude, latitude})
     if (result.code === 0) {
@@ -40,4 +50,44 @@ async  getAddress({commit, state}){
     }
     //根据结果提交mutation
   },
+  saveUser({commit},user){
+  commit(RECEIVE_USER,{user})
+  },
+  
+  async getUserInfo({commit}){
+    const result = await reqUserInfo()
+    if (result.code === 0) {
+      const user = result.data
+      commit(RECEIVE_USER, {user})
+    }
+  },
+  async logout({commit}){
+    const result = await reqLogout()
+    if (result.code === 0) {
+      commit(RECEIVE_USER)
+    }
+  },
+  async getShopinfo({commit}){
+    const result = await reqShopInfo()
+    if (result.code === 0) {
+      const info = result.data
+      info.score=3.5
+      commit(RECEIVE_INFO, {info})
+    }
+  },
+  async getShopRatings({commit}){
+    const result = await reqShopRatings()
+    if (result.code === 0) {
+      const ratings = result.data
+      commit(RECEIVE_RATINGS, {ratings})
+    }
+  },
+  async getShopGoods({commit}){
+    const result = await reqShopGoods()
+    if (result.code === 0) {
+      const goods = result.data
+      commit(RECEIVE_GOODS, {goods})
+    }
+  },
+  
 }

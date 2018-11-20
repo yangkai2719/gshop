@@ -1,23 +1,32 @@
 <template>
   <footer class="footer_guide border-1px">
     <span class="guide_item" :class="{on:$route.path==='/msite'}" @click="goto('/msite')">
-      <span><i class="iconfont icon-waimai"></i>
+      <span class="item_icon">
+        <i class="iconfont icon-waimai"></i>
       </span>
-      <span class="itemText">外卖</span>
+      <span>外卖</span>
     </span>
-    <span class="guide_item" :class="{on:$route.path==='/search'}" @click="goto('/search')"><span><i
-      class="iconfont icon-search"></i></span>
-      <span class="itemText">搜索</span>
+    <a href="javascript:;" class="guide_item"
+       :class="{on:$route.path==='/search'}" @click="goto('/search')">
+      <span class="item_icon">
+  <i class="iconfont icon-search"></i>
     </span>
-    <span class="guide_item" :class="{on:$route.path==='/order'}" @click="goto('/order')"><span><i
-      class="iconfont icon-dingdan"></i></span>
-      <span class="itemText">订单</span>
+      <span>搜索</span>
+    </a>
+    <a href="javascript:;" class="guide_item"
+       :class="{on:$route.path==='/order'}" @click="goto('/order')">
+      <span class="item_icon">
+  <i class="iconfont icon-dingdan"></i>
     </span>
-    <span class="guide_item" :class="{on:$route.path==='/profile'}" @click="goto('/profile')"><span><i
-      class="iconfont icon-geren"></i></span>
-      <i class="iconfont icon-geren"></i>
+      <span>订单</span>
+    </a>
+    <a href="javascript:;" class="guide_item"
+       :class="{on:$route.path==='/profile'}" @click="goto('/profile')">
+      <span class="item_icon">
+        <i class="iconfont icon-search"></i>
     </span>
-    <span>我的</span>
+      <span>我的</span>
+    </a>
   </footer>
 </template>
 
@@ -35,6 +44,7 @@
 
 <style lang="stylus" rel="stylesheet/stylus">
   @import "../../common/stylus/mixins.styl"
+
   .footer_guide
     top-border-1px(#e4e4e4)
     position fixed
@@ -42,6 +52,7 @@
     bottom 0
     left 0
     right 0
+    background-color #fff
     width 100%
     height 50px
     display flex

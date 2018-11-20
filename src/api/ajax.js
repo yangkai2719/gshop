@@ -5,7 +5,7 @@ export default function ajax(url,data={},method='GET') {
 return new Promise((resolve,reject)=>{
   let promise
   if (method==='GET') {
-    let queryStr=''
+    
     // url += '?';
     let queryStr=''
     Object.keys(data).forEach(key => {
