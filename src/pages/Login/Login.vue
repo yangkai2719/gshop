@@ -40,9 +40,10 @@
                   <span class="switch_text">{{isShowPwd ? 'abc' : ''}}</span>
                 </div>
               </section>
-                <section class="login_message">
-                  <input type="text" maxlength="11" placeholder="验证码" v-model="captcha">
-                  <img ref="captcha" class="get_verification" src="http://localhost:5000/captcha" alt="captcha" @click="updateCaptcha">
+              <section class="login_message">
+                <input type="text" maxlength="11" placeholder="验证码" v-model="captcha">
+                <img ref="captcha" class="get_verification" src="http://localhost:5000/captcha" alt="captcha"
+                     @click="updateCaptcha">
 
               </section>
             </section>
@@ -59,17 +60,17 @@
 </template>
 
 <script>
-  import {reqSendCode,reqPwdLogin,reqSmsLogin} from '../../api'
-  import {Toast,MessageBox} from 'mint-ui'
+  import {reqSendCode, reqPwdLogin, reqSmsLogin} from '../../api'
+  import {Toast, MessageBox} from 'mint-ui'
   export default {
     data(){
       return {
         loginWay: false,
         phone: '',
-        code:'',
-        name:'',
-        pwd:'',
-        captcha:'',
+        code: '',
+        name: '',
+        pwd: '',
+        captcha: '',
         computeTime: 0,
         isShowPwd: false,
       }
@@ -80,7 +81,7 @@
       }
     },
     methods: {
-      sendCode(){
+     async sendCode(){
         this.computeTime = 30
         const interalId = setInterval(() => {
           console.log('----', this.computeTime)
@@ -91,13 +92,75 @@
             clearInterval(interalId)
           }
         }, 1000)
+
+        const result = await
+        reqSendCode(this.phone)
+        if (result.code === 0) {
+          Toast('短信已发送')
+        } else {
+          this.computeTime = 0
+          MessageBox.alert(result.msg, '提示')
+        }
+      },
+      updateCaptcha(){
+        this.$refs.captcha.src = 'http://localhost:5000/captcha?thime=' + Date.now()
+      },
+      async login(){
+        const {phone, code, name, pwd, captcha, loginWay} = this
+        let result
+        if (loginWay) {
+          if (!this.isRightPhone) {
+            return MessageBox.alert('必须指定正确的手机号')
+          } else if (!/^\d{6}$/.test(code)) {
+            return MessageBox.alert('验证码必须是6位数字')
+          }
+          result = await reqSmsLogin(phone, code)
+          this.computeTime = 0
+        } else {
+          if (!name) {
+            return MessageBox.alert('必须指定用户名')
+          } else if (!pwd) {
+            return MessageBox.alert('必须指定密码')
+          } else if (!captcha) {
+            return MessageBox.alert('必须指定验证码')
+          }
+          result = await reqPwdLogin({name, pwd, captcha})
+          if (result.code !== 0) {
+            this.updateCaptcha()
+          }
+        }
+        if (result.code === 0) {
+          this.$store.dispatch('saveUser', sesult.data)
+          this.$router.replace('/profile')
+        }
+        else {
+          MessageBox.alert('登录失败')
+        }
       }
     }
   }
+
 </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 <style lang="stylus" rel="stylesheet/stylus" scoped>
   @import "../../common/stylus/mixins.styl"
+
   .loginContainer
     width 100%
     height 100%

@@ -5,4 +5,4 @@ Mock.mock('/info',{code:0,data:data.info})
 Mock.mock('/ratings',{code:0,data:data.ratings})
 Mock.mock('/goods',{code:0,data:data.goods})
 
-comsole.log('mockserver running')
+console.log('mockserver running')

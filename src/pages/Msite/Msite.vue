@@ -13,7 +13,7 @@
       <div class="swiper-container" v-if="categorys.length">
         <div class="swiper-wrapper">
           <div class="swiper-slide" v-for="(categorys, index) in categorysArr" :key="index">
-            <a href="javascript:" class="link_to_food" v-for="(category,index) in category" :key="index">
+            <a href="javascript:" class="link_to_food" v-for="(category,index) in categorys" :key="index">
               <div class="food_container">
                 <img :src="'https://fuss10.elemecdn.com'+category.image_url">
               </div>
@@ -41,7 +41,7 @@
   import 'swiper/dist/css/swiper.min.css'
   import ShopList from '../../components/ShopList/ShopList.vue'
   export default {
-    mouted(){
+    mounted(){
       this.$store.dispatch('getFoodCategorys')
       this.$store.dispatch('getShops')
     },
@@ -82,8 +82,47 @@
   }
 </script>
 
-<style lang="stylus" rel="stylesheet/stylus">
+<style lang="stylus" rel="stylesheet/stylus" scoped>
   @import "../../common/stylus/mixins.styl"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   .msite
     width 100%
@@ -103,7 +142,7 @@
             justify-content center
             align-items flex-start
             flex-wrap wrap
-            .link_to_fond
+            .link_to_food
               width 25%
               .food_container
                 display block
@@ -124,21 +163,19 @@
         .swiper-pagination
           > span.swiper-pagination-bullet-active
             background #02a774
-
-  .msite_shop_list
-    top-border-1px(#e4e4e4)
-    margin-top 10px
-    background #fff
-    .shop_header
-      padding 10px 10px 0
-      .shop_icon
-        margin-left 5px
-        color #999
-      .shop_header_title
-        color #999
-        font-size 14px
-        line-height 20px
-
+    .msite_shop_list
+      top-border-1px(#e4e4e4)
+      margin-top 10px
+      background #fff
+      .shop_header
+        padding 10px 10px 0
+        .shop_icon
+          margin-left 5px
+          color #999
+        .shop_header_title
+          color #999
+          font-size 14px
+          line-height 20px
 </style>
 
 
