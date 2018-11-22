@@ -9,4 +9,5 @@ export default {
   goods:[],
   ratings:[],
   info:{},
+  carFoods:[],
 }

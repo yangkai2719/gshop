@@ -19,25 +19,37 @@
             <ul>
               <li class="food-item bottom-border-1px" v-for="(food,index) in good.foods" :key="index">
                 <div class="icon">
-                  <img src="food.icon" width="57" height="57">
+                  <img :src="food.icon" width="57" height="57">
                 </div>
+                <div class="content">
+                  <h2 class="name">{{food.name}}</h2>
+                  <p class="desc">{{food.description}}</p>
+                  <div class="extra">
+                    <span class="count">月售{{food.sellCount}}份</span>
+                    <span>好评率{{food.rating}}%</span>
+                    <div class="price">
+                      <span class="now">¥{{food.price}}</span></div>
+                      <span class="old" v-if="food.oldPrice">¥{{food.oldPrice}}</span>
+                    </div>
+                    <div class="cartcontrol-wrapper">
+                      <CarControl :food="food" />
+                    </div>
+                  </div>
               </li>
             </ul>
-
           </li>
         </ul>
       </div>
-
-
+<ShopCart/>
     </div>
-
-
   </div>
 </template>
 
 <script>
   import BScroll from 'better-scroll'
   import {mapState} from 'vuex'
+  import CartControl from '../../../components/CartControl/CartControl.vue'
+  import ShopCart from '../../../components/ShopCart/ShopCart.vue'
   export default {
     data(){
       return {
@@ -108,12 +120,16 @@
         this.rightScroll.scrollTo(0, y, 500)
       }
 
+    },
+    components:{
+      CartControl,
+      ShopCart
     }
   }
 
 </script>
 
-<style lang="stylus" rel="stylesheet/stylus" scoped>
+<style lang="stylus" rel="stylesheet/stylus">
   @import "../../../common/stylus/mixins.styl"
   .goods
     display: flex

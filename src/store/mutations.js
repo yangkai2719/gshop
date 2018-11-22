@@ -1,4 +1,5 @@
 //
+import Vue from 'vue'
 import{
   RECEIVE_ADDRESS,
   RECEIVE_CATEGORYS,
@@ -8,7 +9,8 @@ import{
   RECEIVE_GOODS,
   RECEIVE_RATINGS,
   RECEIVE_INFO,
-
+  ADD_FOOD_COUNT,
+  REDUCE_FOOD_COUNT
 } from './mutation-types'
 export default {
   [RECEIVE_ADDRESS](state,{address}){
@@ -36,5 +38,21 @@ export default {
   [RECEIVE_GOODS](state,{goods}){
     state.goods=goods
   },
+  [ADD_FOOD_COUNT](state,{food}){
+  if (food.count) {
+      food.count++
+  } else {
+      Vue.set(food,'count',1)
+  state.cartFoods.push(food)
+  }
+  },
+[REDUCE_FOOD_COUNT](state,{food}){
+    if(food.count){
+  food.count--
+      if (food.count===0) {
+          state.cartFoods.splice(state.cartFoods.indexOf(food),1)
+      }
+    }
+},
 }
 

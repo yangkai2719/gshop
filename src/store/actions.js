@@ -17,6 +17,8 @@ import{
   RECEIVE_INFO,
   RECEIVE_RATINGS,
   RECEIVE_GOODS,
+  ADD_FOOD_COUNT,
+  REDUCE_FOOD_COUNT
 }   from './mutation-types'
 
 
@@ -67,7 +69,7 @@ async  getAddress({commit, state}){
       commit(RESET_USER)
     }
   },
-  async getShopinfo({commit}){
+  async getShopInfo({commit}){
     const result = await reqShopInfo()
     if (result.code === 0) {
       const info = result.data
@@ -90,5 +92,12 @@ async  getAddress({commit, state}){
       typeof cb==='function' && cb()
     }
   },
+  updateFoodCount({commit},{food,isAdd}){
+  if (isAdd) {
+      commit(ADD_FOOD_COUNT,{food})
+  } else {
+      commit(REDUCE_FOOD_COUNT,{food})
+  }
   
+  }
 }
