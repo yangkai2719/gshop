@@ -32,7 +32,7 @@
                       <span class="old" v-if="food.oldPrice">¥{{food.oldPrice}}</span>
                     </div>
                     <div class="cartcontrol-wrapper">
-                      <CarControl :food="food" />
+                      <CartControl :food="food" />
                     </div>
                   </div>
               </li>
@@ -53,14 +53,14 @@
   export default {
     data(){
       return {
-        scrolly: 0,
+        scrollY: 0,
         tops: [],
       }
     },
     mounted(){
       this.$store.dispatch('getShopGoods', () => {
         this.$nextTick(() => {
-          this._initScrollbar()
+          this._initScroll()
           this._initTops()
         })
 
@@ -71,7 +71,7 @@
       currentIndex(){
         const {scrollY, tops} = this
         const index = tops.findIndex((top, index) => {
-          return scrollY > top && scrollY < tops[index + 1]
+          return scrollY >=top && scrollY < tops[index + 1]
         })
         if (this.index !== index && this.leftScroll) {
           this.index = index
@@ -149,7 +149,7 @@
         width: 56px
         padding: 0 12px
         line-height: 14px
-        &.curret
+        &.current
           position: relative
           z-index: 10
           margin-top: -1px
@@ -201,31 +201,31 @@
             line-height: 14px
             font-size: 14px
             color: rgb(7, 17, 27)
-            .desc, .extra
-              line-height: 10px
+          .desc, .extra
+            line-height: 10px
+            font-size: 10px
+            color: rgb(147, 153, 159)
+          .desc
+            line-height: 12px
+            margin-bottom: 8px
+          .extra
+            .count
+              margin-rigth: 12px
+          .price
+            font-weight: 700
+            line-height: 24px
+            .now
+              margin-right: 8px
+              font-size: 14px
+              color: rgb(240, 20, 20)
+            .old
+              text-decoration: line-through
               font-size: 10px
               color: rgb(147, 153, 159)
-            .desc
-              line-height: 12px
-              margin-bottom: 8px
-            .extra
-              .count
-                margin-rigth: 12px
-            .price
-              font-weight: 700
-              line-height: 24px
-              .now
-                margin-right: 8px
-                font-size: 14px
-                color: rgb(240, 20, 20)
-              .old
-                text-decoration: line-through
-                font-size: 10px
-                color: rgb(147, 153, 159)
-            .cartcontrol-wrapper
-              position: absolute
-              right: 0
-              bottom: 12px
+          .cartcontrol-wrapper
+            position: absolute
+            right: 0
+            bottom: 12px
 </style>
 
 

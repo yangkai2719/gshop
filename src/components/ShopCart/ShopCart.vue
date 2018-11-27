@@ -56,11 +56,15 @@
       payClass(){
         const {totalPrice} = this
         const {minPrice} = this.info
+        if(!minPrice)
+          return''
         return totalPrice < minPrice ? 'not-enough' : 'enough'
       },
       payText(){
         const {totalPrice} = this
         const {minPrice} = this.info
+        if(!minPrice)
+          return''
         if (totalPrice === 0) {
           return `¥${minPrice}元起送`
         } else if (totalPrice < minPrice) {
@@ -70,14 +74,41 @@
         }
 
       },
+listShow(){
+        if (this.totalCount===0) {
+            this.isShow=false
+          return false
+        }
+        if (this.isShow) {
+            this.$nextTick(()=>{
+              if (!this.scroll) {
+                  console.log('创建BScroll对象')
+              this.scroll=new BScroll('.list-content',{
+                click:true
+              })
+              }else {
+                this.scroll.refresh()
+              }
+            })
+        }
 
+return this.isShow
 
+}
     },
 
 
     methods: {
       toggleShow(){
+        if (this.totalCount>0){
         this.isShow = !this.isShow
+      }
+
+      },
+      clearCart(){
+        MessageBox.confirm('确定清空购物车吗?').then(action=>{
+          this.$store.dispatch
+        })
       }
     },
     components: {
@@ -89,34 +120,12 @@
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus" scoped>
-  @import "../../common/stylus/mixins.styl"
-  .shopcart
-    position: fixed
-    left: 0
-    bottom: 0
-    z-index: 50
-    width: 100%
-    height: 48px
-    .content
-      display: flex
-      background: #141d27
-      font-size: 0
-      color: rgba(255, 255, 255, 0.4)
-      .content-left
-        flex: 1
-        .logo-wrapper
-          display: inline-block
-          vertical-align: top
-          position: relative
-          top: -10px
-          margin: 0 12px
-          padding: 6px
-          width: 56px
-          height: 56px
-          box-sizing: border-box
-          baoder-radius: 50%
-          background: #141d27
-          .logo
+          @import "../../common/stylus/mixins.styl"
+          .shopcart
+            position: fixed
+            left: 0
+            bottom: 0
+            z-index: 50
             width: 100%
             height: 48px
             .content
@@ -178,12 +187,12 @@
                   font-weight: 700
                   &.highlight
                     color: #fff
-              .desc
-                display: inline-block
-                vertical-align: top
-                margin: 12px 0 0 12px
-                line-height: 24px
-                font-size: 10px
+                .desc
+                  display: inline-block
+                  vertical-align: top
+                  margin: 12px 0 0 12px
+                  line-height: 24px
+                  font-size: 10px
               .content-right
                 flex: 0 0 105px
                 width: 105px
@@ -198,67 +207,67 @@
                   &.enough
                     background: #00b43c
                     color: #fff
-              .shopcart-list
-                position: absolute
-                left: 0
-                top: 0
-                z-index: -1
-                width: 100%
-                transform translateY(-100%)
-                .list-header
-                  height: 40px
-                  line-height: 40px
-                  padding: 0 18px
-                  background: #f3f5f7
-                  border-bottom: 1px solid rgba(7, 17, 27, 0.1)
-                  .title
-                    float: left
+            .shopcart-list
+              position: absolute
+              left: 0
+              top: 0
+              z-index: -1
+              width: 100%
+              transform translateY(-100%)
+              .list-header
+                height: 40px
+                line-height: 40px
+                padding: 0 18px
+                background: #f3f5f7
+                border-bottom: 1px solid rgba(7, 17, 27, 0.1)
+                .title
+                  float: left
+                  font-size: 14px
+                  color: rgb(7, 17, 27)
+                .empty
+                  float: right
+                  font-size: 12px
+                  color: rgb(0, 160, 220)
+              .list-content
+                padding: 0 18px
+                max-height: 217px
+                overflow: hidden
+                background: #fff
+                .food
+                  position: relative
+                  padding: 12px 0
+                  box-sizing: border-box
+                  bottom-border-1px(rgba(7, 17, 27, 0.1))
+                  .name
+                    line-height: 24px
                     font-size: 14px
                     color: rgb(7, 17, 27)
-                  .empty
-                    float: right
-                    font-size: 12px
-                    color: rgb(0, 160, 220)
-                .list-content
-                  padding: 0 18px
-                  max-height: 217px
-                  overflow: hidden
-                  background: #fff
-                  .food
-                    position: relative
-                    padding: 12px 0
-                    box-sizing: border-box
-                    bottom-border-1px(rgba(7, 17, 27, 0.1))
-                    .name
-                      line-height: 24px
-                      font-size: 14px
-                      color: rgb(7, 17, 27)
-                    .price
-                      position: absoute
-                      right: 90px
-                      bootom: 12px
-                      line-height: 24px
-                      font-weight: 14px
-                      font-weight: 700
-                      color: rgb(240, 20, 20)
-                    .cartcontrol-wrapper
-                      position: absolute
-                      right: 0
-                      bottom: 6px
-              .list-mask
-                position: fixed
-                top: 0
-                left: 0
-                width: 100%
-                height: 100%
-                z-index: 40
-                backdrop-filter: blur(10px)
-                opacity: 1
-                background: rgba(7, 17, 27, 0.6)
-                &.fade-enter-active, &fade-leave-active
-                  transition: all 0.5s
-                &.fade-enter, &.fade-leave-to
-                  opacity: 0
+                  .price
+                    position: absoute
+                    right: 90px
+                    bootom: 12px
+                    line-height: 24px
+                    font-size: 14px
+                    font-weight: 700
+                    color: rgb(240, 20, 20)
+                  .cartcontrol-wrapper
+                    position: absolute
+                    right: 0
+                    bottom: 6px
+          .list-mask
+            position: fixed
+            top: 0
+            left: 0
+            width: 100%
+            height: 100%
+            z-index: 40
+            backdrop-filter: blur(10px)
+            opacity: 1
+            background: rgba(7, 17, 27, 0.6)
+            &.fade-enter-active, &fade-leave-active
+              transition: all 0.5s
+            &.fade-enter, &.fade-leave-to
+              opacity: 0
 
 
 </style>

@@ -60,6 +60,7 @@
 </template>
 
 <script>
+  import Vue from 'vue'
   import {reqSendCode, reqPwdLogin, reqSmsLogin} from '../../api'
   import {Toast, MessageBox} from 'mint-ui'
   export default {
@@ -136,27 +137,21 @@
         else {
           MessageBox.alert('登录失败')
         }
+      },
+    },
+
+beforeRouteEnter(to,from,next){
+    console.log('beforeRouteEnter()',this)
+    next((comp)=>{
+      if(!comp.$store.state.user._id){
+        next()
+      }else{
+        next('/profile')
       }
-    }
+    })
   }
-
+  }
 </script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 <style lang="stylus" rel="stylesheet/stylus" scoped>
   @import "../../common/stylus/mixins.styl"
