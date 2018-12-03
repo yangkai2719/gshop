@@ -1,5 +1,5 @@
 import ajax from './ajax'
-const BASE = ''
+const BASE = '/api'
 //维度,经度
 export const reqAddress = (longitude, latitude) => ajax(BASE + `/position/${latitude},${longitude}`)
 //type category ?+query参数 语法基本要求 语法背后的功能  接口文档 定义参数

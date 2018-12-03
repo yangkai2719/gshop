@@ -1,6 +1,7 @@
 <template>
   <div class="ratings">
     <div class="ratings-content">
+      <div class="overview">
       <div class="overview-left">
         <h1 class="score">{{info.score}}</h1>
         <div class="title">综合评分</div>
@@ -15,24 +16,22 @@
         <div class="score-wrapper">
           <span class="title">商品评分</span>
           <Star :score="info.foodScore" :size="36"/>
-          <span class="score">{{info.foodScore}}</span>
-        </div>
+          <span class="score">{{info.foodScore}}</span></div>
         <div class="delivery-wrapper">
           <span class="title">送达时间</span>
           <span class="delivery">{{info.deliveryTime}}分钟</span>
         </div>
       </div>
     </div>
-  </div>
+
   <Split/>
-</template>
 <RatingsFilter :selectType="selectType"
                :onlyContent="onlyContent"
                @setSelectType="setSelectType"
                @toggleOnlyContent="toggleOnlyContent"/>
 <div class="rating-wrapper">
   <ul>
-    <li class="rating-item" v-for="(rating,index)in fillterRatings" :key="index">
+    <li class="rating-item" v-for="(rating,index) in filterRatings" :key="index">
       <div class="avatar">
         <img width="28" height="28" :src="rating.avatar">
       </div>
@@ -51,6 +50,9 @@
     </li>
   </ul>
 </div>
+</div>
+</div>
+</template>
 
 
 <script>
